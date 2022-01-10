@@ -1,0 +1,93 @@
+CREATE TABLE my_table (stock STRING, time INT, qty INT, price INT)
+
+LOAD DATA INFILE "trade_table.csv"
+INTO TABLE my_table
+FIELDS TERMINATED BY ","
+
+<q>
+\echo "****************************************************"
+\echo "Calculating weighted average..."
+start_time: gtime .z.p
+</q>
+
+CREATE TABLE avg_wt_table
+AS
+    SELECT stock, SUM(qty*price)/SUM(qty) as avg_wt FROM my_table
+    GROUP BY stock
+
+SELECT stock, avg_wt FROM avg_wt_table
+INTO OUTFILE "avg_wt.csv"
+FIELDS TERMINATED BY ","
+
+<q>
+end_time: gtime .z.p
+\echo "Elapsed time for weighted average calculation:"
+end_time - start_time
+\echo "****************************************************"
+</q>
+
+<q>
+\echo "****************************************************"
+\echo "Calculating 10 trade unweighted moving average..."
+start_time: gtime .z.p
+</q>
+
+WITH nested(stock, time, price, mv_avg) AS (
+ SELECT stock, time, price, avgs(10,price) as mv_avg FROM my_table
+ ASSUMING asc time
+ GROUP BY stock
+)
+SELECT * FROM flatten(nested)
+INTO OUTFILE "ten_mv_avg.csv"
+FIELDS TERMINATED BY ","
+
+<q>
+end_time: gtime .z.p
+\echo "Elapsed time for 10 trade unweighted moving average calculation:"
+end_time - start_time
+\echo "****************************************************"
+</q>
+
+<q>
+\echo "****************************************************"
+\echo "Calculating 10 trade weighted moving average..."
+start_time: gtime .z.p
+</q>
+
+WITH nested2(stock, time, qty, price, wt_mv_avg) AS (
+ SELECT stock, time, qty, price, avgs(10,price * qty) / avgs(10, qty) as wt_mv_avg FROM my_table
+ ASSUMING asc time
+ GROUP BY stock
+)
+SELECT * FROM flatten(nested2)
+INTO OUTFILE "ten_wt_mv_avg.csv"
+FIELDS TERMINATED BY ","
+
+<q>
+end_time: gtime .z.p
+\echo "Elapsed time for 10 trade weighted moving average calculation:"
+end_time - start_time
+\echo "****************************************************"
+</q>
+
+<q>
+\echo "****************************************************"
+\echo "Calculating best trade..."
+start_time: gtime .z.p
+</q>
+
+WITH nested3(stock, max_price_difference) AS (
+ SELECT stock, max(price - mins(price)) as max_price_difference FROM my_table
+ ASSUMING asc time
+ GROUP BY stock
+)
+SELECT * FROM nested3
+INTO OUTFILE "best_trade.csv"
+FIELDS TERMINATED BY ","
+
+<q>
+end_time: gtime .z.p
+\echo "Elapsed time for best trade calculation:"
+end_time - start_time
+\echo "****************************************************"
+</q>

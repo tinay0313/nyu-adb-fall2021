@@ -1,0 +1,46 @@
+Last login: Mon Nov 15 19:49:44 on ttys000
+➜  hw2 sqlite3
+SQLite version 3.36.0 2021-06-18 18:58:49
+Enter ".help" for usage hints.
+Connected to a transient in-memory database.
+Use ".open FILENAME" to reopen on a persistent database.
+sqlite> .read q2.sql
+CREATE TABLE IF NOT EXISTS "fractal_trade"(
+  "stock" TEXT,
+  "time" TEXT,
+  "qty" TEXT,
+  "price" TEXT
+);
+*********************FRACTAL************************
+"Retrieving all columns..."
+Run Time: real 1.625 user 1.595143 sys 0.030223
+****************************************************
+"Retrieving just the needed columns..."
+Run Time: real 1.200 user 1.183525 sys 0.016608
+****************************************************
+"Without clustered index on price..."
+Run Time: real 1.082 user 1.069394 sys 0.012497
+****************************************************
+"With clustered index on price..."
+Run Time: real 1.029 user 1.004156 sys 0.024452
+****************************************************
+CREATE TABLE IF NOT EXISTS "uniform_trade"(
+  "stock" TEXT,
+  "time" TEXT,
+  "qty" TEXT,
+  "price" TEXT
+);
+*********************UNIFORM***********************
+"Retrieving all columns..."
+Run Time: real 1.655 user 1.586349 sys 0.064788
+****************************************************
+"Retrieving just the needed columns..."
+Run Time: real 1.196 user 1.181039 sys 0.015130
+****************************************************
+"Without clustered index on price..."
+Run Time: real 1.082 user 1.073202 sys 0.008966
+****************************************************
+"With clustered index on price..."
+Run Time: real 1.030 user 1.000346 sys 0.030211
+sqlite> .exit
+➜  hw2 

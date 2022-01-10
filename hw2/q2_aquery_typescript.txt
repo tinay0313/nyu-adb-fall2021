@@ -1,0 +1,57 @@
+Last login: Mon Nov 15 19:40:22 on ttys002
+➜  hw2 runaq q2.q q2.a
+➜  hw2 q q2.q         
+KDB+ 4.0 2021.07.12 Copyright (C) 1993-2021 Kx Systems
+m64/ 8(16)core 8192MB tiyuan tinas-air 192.168.1.161 EXPIRE 2022.09.09 thy258@nyu.edu KOD #5005647
+
+`fractal_trade
+`fractal_trade
+,"*********************FRACTAL************************"
+,"Retrieving all columns..."
++`stock`time`qty`price!(`s47439`s21886`s45875`s43061`s8387`s35189`s23719`s449..
+,"Elapsed time:"
+0D00:00:00.004960000
+,"****************************************************"
+,"Retrieving just the needed columns..."
++`stock`price!(`s47439`s21886`s45875`s43061`s8387`s35189`s23719`s44954`s2731`..
+,"Elapsed time:"
+0D00:00:00.002094000
+,"****************************************************"
+,"Without clustered index on price..."
++(,`stock)!,`symbol$()
+,"Elapsed time:"
+0D00:00:00.014368000
+,"****************************************************"
+`sorted_fractal
+,"With clustered index on price..."
++(,`stock)!,`symbol$()
+,"Elapsed time:"
+0D00:00:00.014742000
+,"****************************************************"
+`uniform_trade
+`uniform_trade
+,"*********************UNIFORM***********************"
+,"Retrieving all columns..."
++`stock`time`qty`price!(`s68005`s46453`s8535`s65351`s66810`s49457`s36839`s562..
+,"Elapsed time:"
+0D00:00:00.002918000
+,"****************************************************"
+,"Retrieving just the needed columns..."
++`stock`price!(`s68005`s46453`s8535`s65351`s66810`s49457`s36839`s56217`s9841`..
+,"Elapsed time:"
+0D00:00:00.001716000
+,"****************************************************"
+,"Without clustered index on price..."
++(,`stock)!,`symbol$()
+,"Elapsed time:"
+0D00:00:00.015804000
+,"****************************************************"
+`sorted_uniform
+,"With clustered index on price..."
++(,`stock)!,`symbol$()
+,"Elapsed time:"
+0D00:00:00.015769000
+,"****************************************************"
+q)\\
+
+➜  hw2 

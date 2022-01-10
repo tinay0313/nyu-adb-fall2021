@@ -1,0 +1,140 @@
+CREATE TABLE fractal_trade (stock STRING, time INT, qty INT, price INT)
+
+LOAD DATA INFILE "trade_table.csv"
+INTO TABLE fractal_trade
+FIELDS TERMINATED BY ","
+
+<q>
+\echo "*********************FRACTAL************************"
+\echo "Retrieving all columns..."
+start_time: gtime .z.p
+</q>
+
+SELECT * FROM fractal_trade
+
+<q>
+end_time: gtime .z.p
+\echo "Elapsed time:"
+end_time - start_time
+\echo "****************************************************"
+</q>
+
+<q>
+\echo "Retrieving just the needed columns..."
+start_time: gtime .z.p
+</q>
+
+SELECT stock, price FROM fractal_trade
+
+<q>
+end_time: gtime .z.p
+\echo "Elapsed time:"
+end_time - start_time
+\echo "****************************************************"
+</q>
+
+<q>
+\echo "Without clustered index on price..."
+start_time: gtime .z.p
+</q>
+
+SELECT stock FROM fractal_trade
+WHERE price > 2500
+
+<q>
+end_time: gtime .z.p
+\echo "Elapsed time:"
+end_time - start_time
+\echo "****************************************************"
+</q>
+
+CREATE TABLE sorted_fractal AS
+SELECT stock as stock, time as time, qty as qty, price as price
+FROM fractal_trade
+ASSUMING ASC price
+
+<q>
+\echo "With clustered index on price..."
+start_time: gtime .z.p
+</q>
+
+SELECT stock FROM sorted_fractal
+WHERE price > 2500
+
+<q>
+end_time: gtime .z.p
+\echo "Elapsed time:"
+end_time - start_time
+\echo "****************************************************"
+</q>
+
+
+CREATE TABLE uniform_trade (stock STRING, time INT, qty INT, price INT)
+
+LOAD DATA INFILE "trade_uniform.csv"
+INTO TABLE uniform_trade
+FIELDS TERMINATED BY ","
+
+<q>
+\echo "*********************UNIFORM***********************"
+\echo "Retrieving all columns..."
+start_time: gtime .z.p
+</q>
+
+SELECT * FROM uniform_trade
+
+<q>
+end_time: gtime .z.p
+\echo "Elapsed time:"
+end_time - start_time
+\echo "****************************************************"
+</q>
+
+<q>
+\echo "Retrieving just the needed columns..."
+start_time: gtime .z.p
+</q>
+
+SELECT stock, price FROM uniform_trade
+
+<q>
+end_time: gtime .z.p
+\echo "Elapsed time:"
+end_time - start_time
+\echo "****************************************************"
+</q>
+
+<q>
+\echo "Without clustered index on price..."
+start_time: gtime .z.p
+</q>
+
+SELECT stock FROM uniform_trade
+WHERE price > 2500
+
+<q>
+end_time: gtime .z.p
+\echo "Elapsed time:"
+end_time - start_time
+\echo "****************************************************"
+</q>
+
+CREATE TABLE sorted_uniform AS
+SELECT stock as stock, time as time, qty as qty, price as price
+FROM uniform_trade
+ASSUMING ASC price
+
+<q>
+\echo "With clustered index on price..."
+start_time: gtime .z.p
+</q>
+
+SELECT stock FROM sorted_uniform
+WHERE price > 2500
+
+<q>
+end_time: gtime .z.p
+\echo "Elapsed time:"
+end_time - start_time
+\echo "****************************************************"
+</q>

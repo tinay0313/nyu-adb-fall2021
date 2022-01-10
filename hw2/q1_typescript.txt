@@ -1,0 +1,36 @@
+Last login: Mon Nov 15 20:01:39 on ttys000
+➜  hw2 runaq q1.q q1.a
+➜  hw2 q q1.q
+KDB+ 4.0 2021.07.12 Copyright (C) 1993-2021 Kx Systems
+m64/ 8(16)core 8192MB tiyuan tinas-air 192.168.1.161 EXPIRE 2022.09.09 thy258@nyu.edu KOD #5005647
+
+`my_table
+`my_table
+,"****************************************************"
+,"Calculating weighted average..."
+`avg_wt_table
+`:avg_wt.csv
+,"Elapsed time for weighted average calculation:"
+0D00:00:00.460010000
+,"****************************************************"
+,"****************************************************"
+,"Calculating 10 trade unweighted moving average..."
+`:ten_mv_avg.csv
+,"Elapsed time for 10 trade unweighted moving average calculation:"
+0D00:00:06.141429000
+,"****************************************************"
+,"****************************************************"
+,"Calculating 10 trade weighted moving average..."
+`:ten_wt_mv_avg.csv
+,"Elapsed time for 10 trade weighted moving average calculation:"
+0D00:00:13.361920000
+,"****************************************************"
+,"****************************************************"
+,"Calculating best trade..."
+`:best_trade.csv
+,"Elapsed time for best trade calculation:"
+0D00:00:01.150179000
+,"****************************************************"
+q)\\
+
+➜  hw2 
