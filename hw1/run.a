@@ -1,0 +1,18 @@
+CREATE TABLE my_table (ID INT, date INT, endofdayprice INT)
+
+LOAD DATA INFILE "ticks.csv"
+INTO TABLE my_table
+FIELDS TERMINATED BY ","
+
+CREATE TABLE my_table2
+AS
+    SELECT ID, date, ratios(1,endofdayprice) as ratio FROM my_table
+    ASSUMING ASC ID, ASC date
+
+SELECT ID, date, ratio FROM my_table2
+INTO OUTFILE "table2.csv"
+FIELDS TERMINATED BY ","
+
+SELECT ID, max(ratio) as max_ratio, min(ratio) as min_ratio FROM my_table2 ASSUMING ASC ID GROUP BY ID
+INTO OUTFILE "ticks_ratios.csv"
+FIELDS TERMINATED BY "|"
